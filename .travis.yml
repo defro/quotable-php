@@ -1,0 +1,14 @@
+language: php
+
+php:
+  - 7.2.34
+  - 7.3.26
+  - 7.4.14
+  - 8.0.23
+  - 8.1.10
+  - nightly
+
+before_script:
+  - composer install --prefer-source --no-interaction --dev
+
+script: composer run-script test

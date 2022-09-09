@@ -1,0 +1,46 @@
+{
+    "name": "defro/quotable-php",
+    "description": "PHP library to request Quotable API.",
+    "homepage": "https://github.com/defro/quotable-php",
+    "keywords":
+        [
+            "api",
+            "quotable",
+            "quote",
+            "citation",
+            "proverb"
+        ],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Joël Gaujard",
+            "email": "j.gaujard@gmail.com",
+            "role": "Developer",
+            "homepage": "https://defro.github.io"
+        }
+    ],
+    "require": {
+        "php": ">=8.1",
+        "ext-json": "*",
+        "guzzlehttp/guzzle": "^7.5"
+    },
+    "require-dev": {
+        "vlucas/phpdotenv": "^2.4",
+        "twig/twig": "^3.0",
+        "phpunit/phpunit": "^9.5"
+    },
+    "autoload": {
+        "psr-4": {
+            "Defro\\Quotable\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Defro\\Quotable\\Tests\\": "tests"
+        }
+    },
+    "scripts": {
+        "test": "vendor/bin/phpunit"
+    },
+    "minimum-stability": "stable"
+}
