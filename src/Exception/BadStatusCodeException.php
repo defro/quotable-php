@@ -1,6 +1,6 @@
 <?php
 
-namespace Defro\Google\StreetView\Exception;
+namespace Defro\Quotable\Exception;
 
 use Throwable;
 

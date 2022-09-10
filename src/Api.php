@@ -2,13 +2,11 @@
 
 namespace Defro\Quotable;
 
-use Defro\Google\StreetView\Exception\BadStatusCodeException;
-use Defro\Google\StreetView\Exception\RequestException;
-use Defro\Google\StreetView\Exception\UnexpectedStatusException;
-use Defro\Google\StreetView\Exception\UnexpectedValueException;
+use Defro\Quotable\Enum\Order;
+use Defro\Quotable\Enum\SortBy;
+use Defro\Quotable\Exception\BadStatusCodeException;
 use Defro\Quotable\Exception\QuotableException;
 use GuzzleHttp\Client;
-use GuzzleHttp\Exception\GuzzleException;
 use Psr\Http\Message\ResponseInterface;
 
 class Api
@@ -19,10 +17,10 @@ class Api
     /** @var string */
     private string $endpointUri = 'https://api.quotable.io';
 
-    private int $minLength;
-    private int $maxLength;
-    private string $tags;
     private string $author;
+    private int $maxLength;
+    private int $minLength;
+    private string $tags;
 
     /**
      * Api constructor.
@@ -38,36 +36,78 @@ class Api
     {
         $uri = $this->endpointUri . '/random';//.'?'.http_build_query($parameters);
 
-        $response = $this->client->get($uri);
-
-        if ($response->getStatusCode() !== 200) {
-            throw new BadStatusCodeException(
-                sprintf('Could not connect to %s', $uri), $response->getStatusCode()
-            );
-        }
-
-        return $this->formatResponse($response);
+        return $this->response($uri);
     }
 
     public function getQuoteById(string $id)
     {
         $uri = $this->endpointUri . '/quotes/' . $id;
 
-        $response = $this->client->get($uri);
-
-        if ($response->getStatusCode() !== 200) {
-            throw new BadStatusCodeException(
-                sprintf('Could not connect to %s', $uri), $response->getStatusCode()
-            );
-        }
-
-        return $this->formatResponse($response);
+        return $this->response($uri);
     }
 
-    public function listQuotes(int $page = 1, int $limit = 20, string $order = 'asc', string $sortBy = 'dateAdded')
+    public function getAuthorBySlug(string $slug)
+    {
+        $uri = $this->endpointUri . '/authors/' . $slug;
+
+        return $this->response($uri);
+    }
+
+    public function listQuotes(
+        int $page = 1, int $limit = 20, Order $order = Order::ASC, SortBy $sortBy = SortBy::DATE_ADDED
+    )
     {
         $uri = $this->endpointUri . '/quotes';//.'?'.http_build_query($parameters);
 
+        return $this->response($uri);
+    }
+
+    public function listTags(
+        SortBy $sortBy = SortBy::NAME, Order $order = Order::ASC
+    )
+    {
+        // validate sort by value
+        if (!in_array($sortBy, [SortBy::DATE_ADDED, SortBy::DATE_MODIFIED, SortBy::NAME, SortBy::QUOTE_COUNT])) {
+            throw new QuotableException(
+                sprintf('Sort by "%s" is not supported for this query.', $sortBy->value)
+            );
+        }
+
+        $uri = $this->endpointUri . '/tags?' . http_build_query([
+                'sortBy' => $sortBy->value,
+                'order' => $order->value,
+            ]);
+
+        return $this->response($uri);
+    }
+
+    public function listAuthors(
+        string $authorSlug = null, int $page = 1, int $limit = 20, SortBy $sortBy = SortBy::NAME, Order $order = Order::ASC
+    )
+    {
+        // validate sort by value
+        if (!in_array($sortBy, [SortBy::DATE_ADDED, SortBy::DATE_MODIFIED, SortBy::NAME, SortBy::QUOTE_COUNT])) {
+            throw new QuotableException(
+                sprintf('Sort by "%s" is not supported for this query.', $sortBy->value)
+            );
+        }
+
+        $data = [
+            'page' => $page,
+            'limit' => $limit,
+            'order' => $order->value,
+            'sortBy' => $sortBy->value,
+        ];
+        if (!empty($authorSlug)) {
+            $data['slug'] = $authorSlug;
+        }
+        $uri = $this->endpointUri . '/authors?' . http_build_query($data);
+
+        return $this->response($uri);
+    }
+
+    private function response(string $uri): array
+    {
         $response = $this->client->get($uri);
 
         if ($response->getStatusCode() !== 200) {
@@ -76,11 +116,6 @@ class Api
             );
         }
 
-        return $this->formatResponse($response);
-    }
-
-    private function formatResponse(ResponseInterface $response): array
-    {
         $json = json_decode($response->getBody()->getContents(), true);
 
         if (json_last_error() === JSON_ERROR_NONE) {
