@@ -23,7 +23,7 @@ var_dump($random);
 
 ## Documentation
 
-Read how to install, use this package, customize it to display on [documentation page](https://defro.github.io/quotable-php/).
+Read how to install, use this package, customize it on [documentation page](https://defro.github.io/quotable-php/).
 
 ## License
 

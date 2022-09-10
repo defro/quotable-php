@@ -2,23 +2,30 @@
 layout: default
 ---
 
+# Docker
+
 A [Dockerfile](../Dockerfile) included in this project allows you to run example script in html page or cli console and run unit tests.
 
-# Initialization
+## Initialization
 
-## Build container
+### Build container
 First you need to build the container.
 ```bash
-docker build -t quotable .
+docker build -t quotable-php .
 ```
-You must launch again this command each time you make changes in Dockerfile.
+You must launch **again** this command each time you make changes in Dockerfile.
 
-## Fetch libraries with composer
+### Fetch libraries with composer
 And you need to fetch all needed libraries describe in [composer.json](../composer.json) file.
 ```bash
-docker run -it --rm --name quotable -v "$(pwd)":/application quotable composer install
+docker run -it --rm --name quotable-php -v "$(pwd)":/application quotable-php composer install
 ```
-You must launch again this command each time you make changes in composer.json file.
+You must launch **again** this command each time you make changes in composer.json file.
+
+## Run unit test
+```bash
+docker run -it --rm --name quotable-php -v "$(pwd)":/application quotable-php composer run-script test
+```
 
 # Run example page
 
@@ -28,16 +35,11 @@ Copy example file [`.env.dist`](../example/.env.dist) as `.env` in the same dire
 
 ## Display example in your browser
 ```bash
-docker run -it --rm --name quotable -v "$(pwd)":/application -p 8080:80 quotable
+docker run -it --rm --name quotable-php -v "$(pwd)":/application -p 8080:80 quotable-php
 ```
 Open your browser and go to http://localhost:8080/
 
 ## Display example in your console
 ```bash
-docker run -it --rm --name quotable -v "$(pwd)":/application quotable php example/index.php
-```
-
-# Run unit test
-```bash
-docker run -it --rm --name quotable -v "$(pwd)":/application quotable composer run-script test
+docker run -it --rm --name quotable-php -v "$(pwd)":/application quotable-php php example/index.php
 ```
