@@ -5,7 +5,7 @@ namespace Defro\Quotable\Tests;
 use Defro\Quotable\Api;
 use GuzzleHttp\Client;
 
-class ListQuotesTest extends BaseTest
+class ListQuotesTest extends TestBase
 {
     public function test_success()
     {

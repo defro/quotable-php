@@ -3,18 +3,12 @@
 namespace Defro\Quotable\Tests;
 
 use Defro\Quotable\Api;
+use Defro\Quotable\Exception\QuotableException;
 use GuzzleHttp\Client;
 use PHPUnit\Framework\TestCase;
 
-class BaseTest extends TestCase
+class TestBase extends TestCase
 {
-    public function test_construct()
-    {
-        $api = new Api(new Client());
-        $this->assertIsObject($api);
-        $this->assertObjectHasAttribute('client', $api);
-    }
-
     protected function assertsQuote($result)
     {
         $this->assertIsArray($result);

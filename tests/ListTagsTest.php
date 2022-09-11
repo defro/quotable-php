@@ -8,7 +8,7 @@ use Defro\Quotable\Enum\SortBy;
 use Defro\Quotable\Exception\QuotableException;
 use GuzzleHttp\Client;
 
-class ListTagsTest extends BaseTest
+class ListTagsTest extends TestBase
 {
     public function test_success()
     {
