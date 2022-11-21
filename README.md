@@ -3,7 +3,7 @@
 [![Latest Version](https://img.shields.io/github/release/defro/quotable-php.svg?style=flat-square)](https://github.com/defro/quotable-php/releases)
 [![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE)
 [![Build Status](https://img.shields.io/travis/defro/quotable-php/master.svg?style=flat-square)](https://travis-ci.org/defro/quotable-php)
-[![SymfonyInsight](https://insight.symfony.com/projects/bb6b7848-7e7a-4e9f-a25b-397369caeef5/mini.svg)](https://insight.symfony.com/projects/bb6b7848-7e7a-4e9f-a25b-397369caeef5)
+[![SymfonyInsight](https://insight.symfony.com/projects/4cf70d48-ef8c-49d1-842f-d0d093d5df63/mini.svg)](https://insight.symfony.com/projects/bb6b7848-7e7a-4e9f-a25b-397369caeef5)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/defro/quotable-php/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/defro/quotable-php/?branch=master)
 [![Code Coverage](https://scrutinizer-ci.com/g/defro/quotable-php/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/defro/quotable-php/?branch=master)
 [![StyleCI](https://styleci.io/repos/156726302/shield)](https://styleci.io/repos/156726302)
