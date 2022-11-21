@@ -2,9 +2,6 @@
 
 namespace Defro\Quotable\Tests;
 
-use Defro\Quotable\Api;
-use Defro\Quotable\Exception\QuotableException;
-use GuzzleHttp\Client;
 use PHPUnit\Framework\TestCase;
 
 class TestBase extends TestCase

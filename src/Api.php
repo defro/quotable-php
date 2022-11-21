@@ -9,7 +9,7 @@ use Defro\Quotable\Exception\QuotableException;
 use GuzzleHttp\Client;
 
 /**
- * Class Api
+ * Class Api.
  *
  * @see
  */
@@ -33,24 +33,24 @@ class Api
 
         if ($server === 'production') {
             $this->endpointUri = 'https://api.quotable.io';
-        }
-        elseif ($server === 'staging') {
+        } elseif ($server === 'staging') {
             $this->endpointUri = 'https://staging.quotable.io';
-        }
-        else {
+        } else {
             throw new QuotableException(sprintf(
-                'Quotable server "%s" is unknown.', $server
+                'Quotable server "%s" is unknown.',
+                $server
             ));
         }
     }
 
     /**
-     * Returns a single random quote from the database
+     * Returns a single random quote from the database.
      *
-     * @param string|null $tags list of one or more tag names, separated by a comma (meaning AND) or a pipe (meaning OR).
-     * @param string|null $author can be an author name or slug. To include quotes by multiple authors, provide a pipe-separated list of author names/slugs.
-     * @param int|null $maxLength maximum Length in characters
-     * @param int|null $minLength minimum Length in characters
+     * @param string|null $tags      list of one or more tag names, separated by a comma (meaning AND) or a pipe (meaning OR).
+     * @param string|null $author    can be an author name or slug. To include quotes by multiple authors, provide a pipe-separated list of author names/slugs.
+     * @param int|null    $maxLength maximum Length in characters
+     * @param int|null    $minLength minimum Length in characters
+     *
      * @return array
      */
     public function getRandomQuote(
@@ -58,8 +58,7 @@ class Api
         ?string $author = null,
         ?int $maxLength = null,
         ?int $minLength = null,
-    ): array
-    {
+    ): array {
         $data = [];
         if (!empty($tags)) {
             $data['tags'] = $tags;
@@ -74,7 +73,7 @@ class Api
             $data['maxLength'] = $maxLength;
         }
 
-        $uri = $this->endpointUri . '/random'. (empty($data) ? '' : '?'.http_build_query($data));
+        $uri = $this->endpointUri.'/random'.(empty($data) ? '' : '?'.http_build_query($data));
 
         return $this->response($uri);
     }
@@ -83,11 +82,12 @@ class Api
      * Get a quote by its ID.
      *
      * @param string $id
+     *
      * @return array
      */
     public function getQuoteById(string $id): array
     {
-        $uri = $this->endpointUri . '/quotes/' . $id;
+        $uri = $this->endpointUri.'/quotes/'.$id;
 
         return $this->response($uri);
     }
@@ -97,11 +97,12 @@ class Api
      * This method can be used to get author details such as bio, website link, and profile image.
      *
      * @param string $slug
+     *
      * @return array
      */
     public function getAuthorBySlug(string $slug): array
     {
-        $uri = $this->endpointUri . '/authors/' . $slug;
+        $uri = $this->endpointUri.'/authors/'.$slug;
 
         return $this->response($uri);
     }
@@ -113,12 +114,13 @@ class Api
      *
      * @param string|null $tags
      * @param string|null $author
-     * @param int|null $maxLength
-     * @param int|null $minLength
-     * @param int $page
-     * @param int $limit
-     * @param Order $order
-     * @param SortBy $sortBy
+     * @param int|null    $maxLength
+     * @param int|null    $minLength
+     * @param int         $page
+     * @param int         $limit
+     * @param Order       $order
+     * @param SortBy      $sortBy
+     *
      * @return array
      */
     public function listQuotes(
@@ -130,12 +132,11 @@ class Api
         int $limit = 20,
         Order $order = Order::ASC,
         SortBy $sortBy = SortBy::DATE_ADDED
-    )
-    {
+    ) {
         $data = [
-            'page' => $page,
-            'limit' => $limit,
-            'order' => $order,
+            'page'   => $page,
+            'limit'  => $limit,
+            'order'  => $order,
             'sortBy' => $sortBy,
         ];
         if (!empty($tags)) {
@@ -151,22 +152,23 @@ class Api
             $data['maxLength'] = $maxLength;
         }
 
-        $uri = $this->endpointUri . '/quotes?'.http_build_query($data);
+        $uri = $this->endpointUri.'/quotes?'.http_build_query($data);
 
         return $this->response($uri);
     }
 
     /**
-     * Get a list of all tags
+     * Get a list of all tags.
      *
      * @param SortBy $sortBy
-     * @param Order $order
+     * @param Order  $order
+     *
      * @return array
      */
     public function listTags(
-        SortBy $sortBy = SortBy::NAME, Order $order = Order::ASC
-    ): array
-    {
+        SortBy $sortBy = SortBy::NAME,
+        Order $order = Order::ASC
+    ): array {
         // validate sort by value
         if (!in_array($sortBy, [SortBy::DATE_ADDED, SortBy::DATE_MODIFIED, SortBy::NAME, SortBy::QUOTE_COUNT])) {
             throw new QuotableException(
@@ -174,10 +176,10 @@ class Api
             );
         }
 
-        $uri = $this->endpointUri . '/tags?' . http_build_query([
-                'sortBy' => $sortBy->value,
-                'order' => $order->value,
-            ]);
+        $uri = $this->endpointUri.'/tags?'.http_build_query([
+            'sortBy' => $sortBy->value,
+            'order'  => $order->value,
+        ]);
 
         return $this->response($uri);
     }
@@ -188,16 +190,20 @@ class Api
      * It can also be used to get author details for one or more specific authors, using the author slug or ids.
      *
      * @param string|null $authorSlug
-     * @param int $page
-     * @param int $limit
-     * @param SortBy $sortBy
-     * @param Order $order
+     * @param int         $page
+     * @param int         $limit
+     * @param SortBy      $sortBy
+     * @param Order       $order
+     *
      * @return array
      */
     public function listAuthors(
-        string $authorSlug = null, int $page = 1, int $limit = 20, SortBy $sortBy = SortBy::NAME, Order $order = Order::ASC
-    )
-    {
+        string $authorSlug = null,
+        int $page = 1,
+        int $limit = 20,
+        SortBy $sortBy = SortBy::NAME,
+        Order $order = Order::ASC
+    ) {
         // validate sort by value
         if (!in_array($sortBy, [SortBy::DATE_ADDED, SortBy::DATE_MODIFIED, SortBy::NAME, SortBy::QUOTE_COUNT])) {
             throw new QuotableException(
@@ -206,15 +212,15 @@ class Api
         }
 
         $data = [
-            'page' => $page,
-            'limit' => $limit,
-            'order' => $order->value,
+            'page'   => $page,
+            'limit'  => $limit,
+            'order'  => $order->value,
             'sortBy' => $sortBy->value,
         ];
         if (!empty($authorSlug)) {
             $data['slug'] = $authorSlug;
         }
-        $uri = $this->endpointUri . '/authors?' . http_build_query($data);
+        $uri = $this->endpointUri.'/authors?'.http_build_query($data);
 
         return $this->response($uri);
     }
@@ -225,7 +231,8 @@ class Api
 
         if ($response->getStatusCode() !== 200) {
             throw new BadStatusCodeException(
-                sprintf('Could not connect to %s', $uri), $response->getStatusCode()
+                sprintf('Could not connect to %s', $uri),
+                $response->getStatusCode()
             );
         }
 
