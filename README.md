@@ -6,7 +6,7 @@
 [![SymfonyInsight](https://insight.symfony.com/projects/4cf70d48-ef8c-49d1-842f-d0d093d5df63/mini.svg)](https://insight.symfony.com/projects/bb6b7848-7e7a-4e9f-a25b-397369caeef5)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/defro/quotable-php/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/defro/quotable-php/?branch=master)
 [![Code Coverage](https://scrutinizer-ci.com/g/defro/quotable-php/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/defro/quotable-php/?branch=master)
-[![StyleCI](https://styleci.io/repos/534630183/shield)](https://styleci.io/repos/156726302)
+[![StyleCI](https://github.styleci.io/repos/534799760/shield?branch=main)](https://styleci.io/repos/534799760)
 [![Total Downloads](https://img.shields.io/packagist/dt/defro/quotable-php.svg?style=flat-square)](https://packagist.org/packages/defro/quotable-php)
 [![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=MSER6KJHQM9NS)
 
